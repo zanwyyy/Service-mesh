@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package controlplane.v1;
+
+option go_package = "github.com/zanwyyy/Service-mesh/mesh-control-plane/api/proto;controlplanev1";
+
+message StreamRequest {
+  string node_id = 1;
+}
+
+message StreamResponse {
+  string version = 1;
+  string payload = 2;
+}
+
+service DiscoveryService {
+  rpc StreamConfig(StreamRequest) returns (stream StreamResponse);
+}
