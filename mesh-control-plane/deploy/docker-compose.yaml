@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  control-plane:
+    image: golang:1.22
+    working_dir: /app/mesh-control-plane
+    command: ["go", "run", "./cmd/controlplane"]
+    volumes:
+      - ..:/app
+    ports:
+      - "18000:18000"
+
+  envoy:
+    image: envoyproxy/envoy:v1.31-latest
+    volumes:
+      - ../config/envoy-bootstrap.yaml:/etc/envoy/envoy.yaml:ro
+    depends_on:
+      - control-plane
